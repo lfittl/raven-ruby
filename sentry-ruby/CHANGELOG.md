@@ -5,6 +5,9 @@
 ### Bug Fixes
 
 - Ignore invalid values for sentry-trace header that don't match the required format [#1265](https://github.com/getsentry/sentry-ruby/pull/1265)
+- Correctly call sampled state initialization logic when capturing sentry-trace [#1265](https://github.com/getsentry/sentry-ruby/pull/1265)
+  - Previously the span's sampled state was always set to nil when the sentry-trace header was set,
+    which caused child spans to not be reported
 
 ## 4.2.0
 
