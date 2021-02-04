@@ -29,11 +29,14 @@ module Sentry
       return unless sentry_trace
 
       match = SENTRY_TRACE_REGEXP.match(sentry_trace)
+      return if match.nil?
       trace_id, parent_span_id, sampled_flag = match[1..3]
 
       sampled = sampled_flag != "0"
 
-      new(trace_id: trace_id, parent_span_id: parent_span_id, parent_sampled: sampled, **options)
+      transaction = new(trace_id: trace_id, parent_span_id: parent_span_id, parent_sampled: sampled, **options)
+      transaction.set_initial_sample_desicion
+      transaction
     end
 
     def to_hash
